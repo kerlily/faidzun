@@ -84,11 +84,6 @@ php_errors.log
 # Don't save phpunit under version control.
 /phpunit
 
-#-------------------------
-# Composer
-#-------------------------
-vendor/
-composer.lock
 
 #-------------------------
 # IDE / Development Files
