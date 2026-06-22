@@ -7,7 +7,8 @@
             <h5 class="mb-0">Form Tambah Guru</h5>
         </div>
         <div class="card-body">
-            <form action="<?= base_url('guru/tambah-guru') ?>" method="post" enctype="multipart/form-data">
+           <form action="<?= base_url('guru/tambah-guru') ?>" method="post" enctype="multipart/form-data">
+    <?= csrf_field() ?>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="nama">Nama Lengkap</label>

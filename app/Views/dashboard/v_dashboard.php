@@ -149,6 +149,7 @@
                     </button>
                 </div>
                 <form id="formUploadFoto" action="<?= base_url('dashboard/tambah-galeri') ?>" method="post" enctype="multipart/form-data">
+                    <?= csrf_field() ?>
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="inputFoto">Pilih Foto</label>

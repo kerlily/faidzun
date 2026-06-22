@@ -101,23 +101,25 @@
         <h4 class="text-dark">LMS SMP 10 Pekalongan</h4>
 
         <form action="<?= site_url('login/proses') ?>" method="post">
-            <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
-                <input placeholder="Masukkan Username" type="text" name="username" required class="form-control" id="username" autofocus>
-            </div>
+    <?= csrf_field() ?>
 
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <div class="input-group">
-                    <input type="password" placeholder="Masukkan Password" name="password" required class="form-control" id="password">
-                    <span class="input-group-text" onclick="togglePassword()">
-                        <i class="bi bi-eye" id="eye-icon"></i>
-                    </span>
-                </div>
-            </div>
+    <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input placeholder="Masukkan Username" type="text" name="username" required class="form-control" id="username" autofocus>
+    </div>
 
-            <button type="submit" class="btn btn-primary w-100">Login</button>
-        </form>
+    <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <div class="input-group">
+            <input type="password" placeholder="Masukkan Password" name="password" required class="form-control" id="password">
+            <span class="input-group-text" onclick="togglePassword()">
+                <i class="bi bi-eye" id="eye-icon"></i>
+            </span>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100">Login</button>
+</form>
 
         <!-- Tambahkan di bawah tombol login -->
         <div class="my-4 d-flex align-items-center text-muted">

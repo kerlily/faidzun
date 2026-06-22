@@ -10,6 +10,7 @@
             </div>
             <div class="card-body">
                 <form action="<?= base_url('mapel/tambah-mapel') ?>" method="post">
+                     <?= csrf_field() ?>
                     <div class="form-group mb-3">
                         <label for="kode_mapel">Kode Mata Pelajaran</label>
                         <input type="text" name="kode_mapel" class="form-control" id="kode_mapel" placeholder="Contoh: MTH001" required style="text-transform: uppercase;">
@@ -21,7 +22,7 @@
 
                     </div>
 
-                    <button type=" submit" class="btn btn-primary">Tambah</button>
+                    <button type="submit" class="btn btn-primary">Tambah</button>
                 </form>
             </div>
         </div>
@@ -115,6 +116,7 @@
             </div>
             <div class="modal-body">
                 <form id="editMapelForm" action="<?= base_url('mapel/edit-mapel') ?>" method="post">
+                    <?= csrf_field() ?>
                     <input type="hidden" name="kode_mapel_lama" id="kode_mapel_lama"> <!-- disimpan jika kode mapel diubah -->
                     <div class="form-group mb-3">
                         <label for="edit_kode_mapel">Kode</label>
