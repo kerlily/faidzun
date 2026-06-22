@@ -5,105 +5,98 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
+
+// =============================================
+// PUBLIC (tidak perlu login)
+// =============================================
 $routes->get('/', 'ValidationController::index');
-$routes->post('login/proses', 'ValidationController::proses');
-$routes->get('logout', 'ValidationController::logout');
+$routes->get('/login', 'ValidationController::index');
+$routes->post('/login/proses', 'ValidationController::proses');
+$routes->get('/logout', 'ValidationController::logout');
 
-
-// $routes->group('', ['filter' => 'auth'], function ($routes) {
-//     $routes->get('/dashboard', 'DashboardController::index');
-//     $routes->get('/guru', 'DashboardController::guru');
-//     $routes->post('/guru/tambah-guru', 'KepalaController::tambahguru');
-//     $routes->post('/guru/hapus/(:num)', 'KepalaController::hapusguru/$1');
-//     $routes->get('/guru/edit-guru/(:num)', 'DashboardController::editguru/$1');
-//     $routes->post('guru/update/(:num)', 'KepalaController::updateguru/$1');
-//     $routes->get('/kelas', 'DashboardController::kelas');
-//     $routes->post('/kelas/tambah-kelas', 'KepalaController::tambahkelas');
-//     $routes->post('/kelas/hapus-kelas', 'KepalaController::hapuskelas');
-//     $routes->post('kelas/edit-kelas', 'KepalaController::editkelas');
-//     $routes->get('/siswa', 'DashboardController::siswa');
-//     $routes->post('/siswa/tambah-siswa', 'KepalaController::tambahsiswa');
-//     $routes->get('siswa/edit-siswa/(:num)', 'DashboardController::editsiswa/$1');
-//     $routes->post('siswa/update/(:num)', 'KepalaController::updatesiswa/$1');
-//     $routes->get('siswa/hapus/(:num)', 'KepalaController::hapussiswa/$1');
-//     $routes->get('/mapel', 'DashboardController::mapel');
-//     $routes->post('/mapel/tambah-mapel', 'KepalaController::tambahmapel');
-//     $routes->post('/mapel/edit-mapel', 'KepalaController::editmapel');
-//     $routes->get('mapel/hapus/(:segment)', 'KepalaController::hapusmapel/$1');
-//     $routes->get('/jadwal-mengajar', 'DashboardController::jadwalmengajar');
-//     $routes->get('/penugasan', 'DashboardController::penugasan');
-//     $routes->get('/edit-penugasan', 'DashboardController::editpenugasan');
-//     $routes->get('/tugas-saya', 'DashboardController::tugassaya');
-//     $routes->get('/absensi', 'DashboardController::absensi');
-//     $routes->get('/absensi/mulai-absensi', 'DashboardController::mulaiabsensi');
-//     $routes->get('/riwayat-absensi', 'DashboardController::riwayatabsensi');
-//     $routes->get('/profil', 'DashboardController::profil');
-//     $routes->get('/edit-profil', 'DashboardController::editprofil');
-//     $routes->get('/panduan', 'DashboardController::panduan');
-// });
-
-
+// =============================================
+// SEMUA ROLE YANG SUDAH LOGIN
+// =============================================
 $routes->group('', ['filter' => 'auth'], function ($routes) {
 
-    // Route yang bisa diakses semua role yang login
+    // Dashboard
     $routes->get('/dashboard', 'DashboardController::index');
+
+    // Profil (semua role)
     $routes->get('/profil', 'DashboardController::profil');
     $routes->get('/profil/edit-profil', 'DashboardController::editprofil');
     $routes->post('/profil/update', 'DashboardController::updateprofil');
+
+    // Panduan (semua role)
     $routes->get('/panduan', 'DashboardController::panduan');
 
-    // HANYA Kepala Sekolah & Operator
-    $routes->group('', ['filter' => 'role:kepala sekolah,operator'], function ($routes) {
-        $routes->get('/guru', 'DashboardController::guru');
-        $routes->get('/guru/export-excel', 'KepalaController::exportguruexcel');
-        $routes->post('/guru/tambah-guru', 'KepalaController::tambahguru');
-        $routes->post('/guru/hapus/(:num)', 'KepalaController::hapusguru/$1');
-        $routes->get('/guru/edit-guru/(:num)', 'DashboardController::editguru/$1');
-        $routes->post('guru/update/(:num)', 'KepalaController::updateguru/$1');
+    // =============================================
+    // GURU & GURU BK (+ kepala sekolah & operator sebagai view)
+    // =============================================
 
-        $routes->get('/kelas', 'DashboardController::kelas');
-        $routes->post('/kelas/tambah-kelas', 'KepalaController::tambahkelas');
-        $routes->post('/kelas/hapus-kelas', 'KepalaController::hapuskelas');
-        $routes->post('kelas/edit-kelas', 'KepalaController::editkelas');
+    // Jadwal mengajar — view untuk guru, kepala, operator
+    $routes->get('/jadwal-mengajar', 'DashboardController::jadwalmengajar', ['filter' => 'role:kepala sekolah,operator,guru,guru bk']);
 
-        $routes->get('/siswa', 'DashboardController::siswa');
-        $routes->get('/siswa/export-excel', 'KepalaController::exportsiswaexcel');
-        $routes->post('siswa/import', 'KepalaController::import');
-        $routes->post('/siswa/tambah-siswa', 'KepalaController::tambahsiswa');
-        $routes->get('siswa/edit-siswa/(:num)', 'DashboardController::editsiswa/$1');
-        $routes->post('siswa/update/(:num)', 'KepalaController::updatesiswa/$1');
-        $routes->get('siswa/hapus/(:num)', 'KepalaController::hapussiswa/$1');
+    // Absensi — hanya guru yang bisa mulai absen
+    $routes->get('/absensi', 'AbsensiController::index', ['filter' => 'role:kepala sekolah,operator,guru,guru bk']);
+    $routes->get('/absensi/mulai-absensi/(:num)', 'AbsensiController::mulai/$1', ['filter' => 'role:guru,guru bk']);
+    $routes->post('/absensi/simpan', 'AbsensiController::simpan', ['filter' => 'role:guru,guru bk']);
+    $routes->get('/absensi/export', 'AbsensiController::exportExcel', ['filter' => 'role:kepala sekolah,operator']);
 
-        $routes->get('/mapel', 'DashboardController::mapel');
-        $routes->post('/mapel/tambah-mapel', 'KepalaController::tambahmapel');
-        $routes->post('/mapel/edit-mapel', 'KepalaController::editmapel');
-        $routes->get('mapel/hapus/(:segment)', 'KepalaController::hapusmapel/$1');
+    // Riwayat absensi
+    $routes->get('/riwayat-absensi', 'AbsensiController::riwayat', ['filter' => 'role:kepala sekolah,operator,guru,guru bk,siswa']);
+    $routes->post('/riwayat-absensi/edit-absensi', 'AbsensiController::editAbsensi', ['filter' => 'role:kepala sekolah,operator']);
+    $routes->post('/data-siswa/hapus_kelas', 'AbsensiController::hapusPerKelas', ['filter' => 'role:kepala sekolah,operator']);
 
-        $routes->post('/jadwal-mengajar/tambah-jadwal-mengajar', 'KepalaController::tambahjadwalmengajar');
-        $routes->post('/jadwal-mengajar/hapus', 'KepalaController::hapusjadwalmengajar');
-        $routes->post('/riwayat-absensi/edit-absensi', 'KepalaController::editabsensi');
-        $routes->post('/data-siswa/hapus_kelas', 'KepalaController::hapusSiswaBerdasarkanKelas');
-        $routes->post('/dashboard/tambah-galeri', 'KepalaController::tambahgaleri');
-        $routes->get('/dashboard/hapus-galeri/(:num)', 'KepalaController::hapusgaleri/$1');
-    });
+    // Penugasan
+    $routes->get('/penugasan', 'PenugasanController::index', ['filter' => 'role:kepala sekolah,operator,guru,guru bk']);
+    $routes->post('/penugasan/tambah-penugasan', 'PenugasanController::tambah', ['filter' => 'role:operator,guru,guru bk']);
+    $routes->get('/penugasan/edit-penugasan/(:num)', 'PenugasanController::edit/$1', ['filter' => 'role:operator,guru,guru bk']);
+    $routes->post('/penugasan/update/(:num)', 'PenugasanController::update/$1', ['filter' => 'role:operator,guru,guru bk']);
+    $routes->post('/penugasan/hapus/(:num)', 'PenugasanController::hapus/$1', ['filter' => 'role:operator,guru,guru bk']);
 
-    // Route untuk Guru dan Guru BK
-    $routes->group('', ['filter' => 'role:guru,guru bk,kepala sekolah,operator'], function ($routes) {
-        $routes->get('/jadwal-mengajar', 'DashboardController::jadwalmengajar');
-        $routes->get('/penugasan', 'DashboardController::penugasan');
-        $routes->post('/penugasan/tambah-penugasan', 'DashboardController::tambahpenugasan');
-        $routes->get('/penugasan/edit-penugasan/(:num)', 'DashboardController::editpenugasan/$1');
-        $routes->post('penugasan/update/(:num)', 'DashboardController::updatepenugasan/$1');
-        $routes->post('/penugasan/hapus/(:num)', 'DashboardController::hapuspenugasan/$1');
-        $routes->get('/absensi', 'DashboardController::absensi');
-        $routes->get('/absensi/export', 'KepalaController::exportAbsenExcel');
-        $routes->get('/absensi/mulai-absensi/(:num)', 'DashboardController::mulaiabsensi/$1');
-        $routes->post('absensi/simpan', 'DashboardController::simpan');
-    });
+    // Tugas siswa (view only untuk kepala sekolah, operator, siswa)
+    $routes->get('/tugas-saya', 'PenugasanController::tugasSaya', ['filter' => 'role:kepala sekolah,operator,siswa']);
 
-    // Route untuk Siswa
-    $routes->group('', ['filter' => 'role:siswa,kepala sekolah,operator'], function ($routes) {
-        $routes->get('/tugas-saya', 'DashboardController::tugassaya');
-        $routes->get('/riwayat-absensi', 'DashboardController::riwayatabsensi');
-    });
+    // =============================================
+    // OPERATOR SAJA (bisa CRUD semua data)
+    // =============================================
+
+    // Guru — operator bisa tambah/edit/hapus
+    $routes->get('/guru', 'ManajemenController::guru', ['filter' => 'role:kepala sekolah,operator']);
+    $routes->post('/guru/tambah-guru', 'ManajemenController::tambahGuru', ['filter' => 'role:operator']);
+    $routes->get('/guru/edit-guru/(:num)', 'ManajemenController::editGuru/$1', ['filter' => 'role:operator']);
+    $routes->post('/guru/update/(:num)', 'ManajemenController::updateGuru/$1', ['filter' => 'role:operator']);
+    $routes->post('/guru/hapus/(:num)', 'ManajemenController::hapusGuru/$1', ['filter' => 'role:operator']);
+    $routes->get('/guru/export-excel', 'ManajemenController::exportGuruExcel', ['filter' => 'role:kepala sekolah,operator']);
+
+    // Siswa
+    $routes->get('/siswa', 'ManajemenController::siswa', ['filter' => 'role:kepala sekolah,operator']);
+    $routes->post('/siswa/tambah-siswa', 'ManajemenController::tambahSiswa', ['filter' => 'role:operator']);
+    $routes->get('/siswa/edit-siswa/(:num)', 'ManajemenController::editSiswa/$1', ['filter' => 'role:operator']);
+    $routes->post('/siswa/update/(:num)', 'ManajemenController::updateSiswa/$1', ['filter' => 'role:operator']);
+    $routes->get('/siswa/hapus/(:num)', 'ManajemenController::hapusSiswa/$1', ['filter' => 'role:operator']);
+    $routes->get('/siswa/export-excel', 'ManajemenController::exportSiswaExcel', ['filter' => 'role:kepala sekolah,operator']);
+    $routes->post('/siswa/import', 'ManajemenController::importSiswa', ['filter' => 'role:operator']);
+
+    // Kelas
+    $routes->get('/kelas', 'ManajemenController::kelas', ['filter' => 'role:kepala sekolah,operator']);
+    $routes->post('/kelas/tambah-kelas', 'ManajemenController::tambahKelas', ['filter' => 'role:operator']);
+    $routes->post('/kelas/edit-kelas', 'ManajemenController::editKelas', ['filter' => 'role:operator']);
+    $routes->post('/kelas/hapus-kelas', 'ManajemenController::hapusKelas', ['filter' => 'role:operator']);
+
+    // Mapel
+    $routes->get('/mapel', 'ManajemenController::mapel', ['filter' => 'role:kepala sekolah,operator']);
+    $routes->post('/mapel/tambah-mapel', 'ManajemenController::tambahMapel', ['filter' => 'role:operator']);
+    $routes->get('/mapel/hapus/(:any)', 'ManajemenController::hapusMapel/$1', ['filter' => 'role:operator']);
+    $routes->post('/mapel/edit-mapel', 'ManajemenController::editMapel', ['filter' => 'role:operator']);
+
+    // Jadwal mengajar CRUD
+    $routes->post('/jadwal-mengajar/tambah-jadwal-mengajar', 'ManajemenController::tambahJadwal', ['filter' => 'role:operator']);
+    $routes->post('/jadwal-mengajar/hapus', 'ManajemenController::hapusJadwal', ['filter' => 'role:operator']);
+
+    // Galeri (dashboard)
+    $routes->post('/dashboard/tambah-galeri', 'ManajemenController::tambahGaleri', ['filter' => 'role:operator']);
+    $routes->get('/dashboard/hapus-galeri/(:num)', 'ManajemenController::hapusGaleri/$1', ['filter' => 'role:operator']);
+    $routes->get('/dashboard/export-absen', 'ManajemenController::exportAbsenExcel', ['filter' => 'role:kepala sekolah,operator']);
 });

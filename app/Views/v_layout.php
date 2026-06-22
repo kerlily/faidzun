@@ -17,28 +17,26 @@
 
     <!-- Custom styles for this template-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="<?= base_url() ?>css/sb-admin-2.min.css" rel="stylesheet">
 
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css">
 
-    <!-- DataTables JS -->
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
+    <!-- Lightbox2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/lightbox2@2.11.4/dist/css/lightbox.min.css" rel="stylesheet" />
 
-    <link href="<?= base_url() ?>css/sb-admin-2.min.css" rel="stylesheet">
+    <!-- Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
     <style>
         a {
             text-decoration: none;
         }
 
-        /* Menambahkan hover effect jika perlu */
         a:hover {
             opacity: 0.8;
-            /* Efek transparansi saat di-hover */
         }
     </style>
-
 
 </head>
 
@@ -182,251 +180,34 @@
                         <div id="searchResults" class="list-group position-absolute mt-1" style="z-index: 9999; max-height: 300px; overflow-y: auto; width: 100%; display: none;"></div>
                     </form>
 
-                    <script>
-                        const userRole = "<?= session()->get('role'); ?>";
-
-                        // Daftar menu berdasarkan role
-                        const allMenus = {
-                            'kepala sekolah': [{
-                                    name: "Dashboard",
-                                    url: "<?= site_url('/dashboard') ?>"
-                                },
-                                {
-                                    name: "Manajemen Guru",
-                                    url: "<?= site_url('/guru') ?>"
-                                },
-                                {
-                                    name: "Manajemen Siswa",
-                                    url: "<?= site_url('/siswa') ?>"
-                                },
-                                {
-                                    name: "Mata Pelajaran",
-                                    url: "<?= site_url('/mapel') ?>"
-                                },
-                                {
-                                    name: "Jadwal Mengajar",
-                                    url: "<?= site_url('/jadwal-mengajar') ?>"
-                                },
-                                {
-                                    name: "Absensi",
-                                    url: "<?= site_url('/absensi') ?>"
-                                },
-                                {
-                                    name: "Penugasan",
-                                    url: "<?= site_url('/penugasan') ?>"
-                                },
-                                {
-                                    name: "Tugas Saya",
-                                    url: "<?= site_url('/tugas-saya') ?>"
-                                },
-                                {
-                                    name: "Riwayat Absensi",
-                                    url: "<?= site_url('/riwayat-absensi') ?>"
-                                },
-                                {
-                                    name: "Profil",
-                                    url: "<?= site_url('/profil') ?>"
-                                },
-                                {
-                                    name: "Panduan",
-                                    url: "<?= site_url('/panduan') ?>"
-                                }
-                            ],
-                            'operator': [{
-                                    name: "Dashboard",
-                                    url: "<?= site_url('/dashboard') ?>"
-                                },
-                                {
-                                    name: "Manajemen Guru",
-                                    url: "<?= site_url('/guru') ?>"
-                                },
-                                {
-                                    name: "Manajemen Siswa",
-                                    url: "<?= site_url('/siswa') ?>"
-                                },
-                                {
-                                    name: "Mata Pelajaran",
-                                    url: "<?= site_url('/mapel') ?>"
-                                },
-                                {
-                                    name: "Jadwal Mengajar",
-                                    url: "<?= site_url('/jadwal-mengajar') ?>"
-                                },
-                                {
-                                    name: "Absensi",
-                                    url: "<?= site_url('/absensi') ?>"
-                                },
-                                {
-                                    name: "Penugasan",
-                                    url: "<?= site_url('/penugasan') ?>"
-                                },
-                                {
-                                    name: "Tugas Saya",
-                                    url: "<?= site_url('/tugas-saya') ?>"
-                                },
-                                {
-                                    name: "Pengumpulan Tugas",
-                                    url: "<?= site_url('/tugas-saya') ?>"
-                                },
-                                {
-                                    name: "Riwayat Absensi",
-                                    url: "<?= site_url('/riwayat-absensi') ?>"
-                                },
-                                {
-                                    name: "Profil",
-                                    url: "<?= site_url('/profil') ?>"
-                                },
-                                {
-                                    name: "Panduan",
-                                    url: "<?= site_url('/panduan') ?>"
-                                }
-                            ],
-                            'guru': [{
-                                    name: "Dashboard",
-                                    url: "<?= site_url('/dashboard') ?>"
-                                },
-                                {
-                                    name: "Penugasan",
-                                    url: "<?= site_url('/penugasan') ?>"
-                                },
-
-                                {
-                                    name: "Absensi",
-                                    url: "<?= site_url('/absensi') ?>"
-                                },
-                                {
-                                    name: "Riwayat Absensi",
-                                    url: "<?= site_url('/riwayat-absensi') ?>"
-                                },
-                                {
-                                    name: "Profil",
-                                    url: "<?= site_url('/profil') ?>"
-                                },
-                                {
-                                    name: "Panduan",
-                                    url: "<?= site_url('/panduan') ?>"
-                                }
-                            ],
-                            'guru bk': [{
-                                    name: "Dashboard",
-                                    url: "<?= site_url('/dashboard') ?>"
-                                },
-                                {
-                                    name: "Penugasan",
-                                    url: "<?= site_url('/penugasan') ?>"
-                                },
-
-                                {
-                                    name: "Absensi",
-                                    url: "<?= site_url('/absensi') ?>"
-                                },
-                                {
-                                    name: "Riwayat Absensi",
-                                    url: "<?= site_url('/riwayat-absensi') ?>"
-                                },
-                                {
-                                    name: "Profil",
-                                    url: "<?= site_url('/profil') ?>"
-                                },
-                                {
-                                    name: "Panduan",
-                                    url: "<?= site_url('/panduan') ?>"
-                                }
-                            ],
-                            'siswa': [{
-                                    name: "Dashboard",
-                                    url: "<?= site_url('/dashboard') ?>"
-                                },
-                                {
-                                    name: "Tugas Saya",
-                                    url: "<?= site_url('/tugas-saya') ?>"
-                                },
-                                {
-                                    name: "Riwayat Absensi",
-                                    url: "<?= site_url('/riwayat-absensi') ?>"
-                                },
-                                {
-                                    name: "Profil",
-                                    url: "<?= site_url('/profil') ?>"
-                                },
-                                {
-                                    name: "Panduan",
-                                    url: "<?= site_url('/panduan') ?>"
-                                }
-                            ]
-                        };
-
-                        // Ambil menu sesuai role
-                        const menuList = allMenus[userRole.toLowerCase()] || [];
-
-                        // Live search
-                        const searchInput = document.getElementById('sidebarSearchInput');
-                        const searchResults = document.getElementById('searchResults');
-
-                        searchInput.addEventListener('input', function() {
-                            const query = this.value.toLowerCase();
-                            searchResults.innerHTML = ''; // clear previous results
-
-                            if (query.length > 0) {
-                                const filtered = menuList.filter(menu =>
-                                    menu.name.toLowerCase().includes(query)
-                                );
-
-                                if (filtered.length > 0) {
-                                    filtered.forEach(menu => {
-                                        const item = document.createElement('a');
-                                        item.href = menu.url;
-                                        item.className = 'list-group-item list-group-item-action';
-                                        item.textContent = menu.name;
-                                        searchResults.appendChild(item);
-                                    });
-                                    searchResults.style.display = 'block';
-                                } else {
-                                    searchResults.innerHTML = '<div class="list-group-item text-muted">Menu tidak ditemukan</div>';
-                                    searchResults.style.display = 'block';
-                                }
-                            } else {
-                                searchResults.style.display = 'none';
-                            }
-                        });
-
-                        // Hide search results when clicking outside
-                        document.addEventListener('click', function(event) {
-                            if (!searchResults.contains(event.target) && event.target !== searchInput) {
-                                searchResults.style.display = 'none';
-                            }
-                        });
-                    </script>
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-                        <ul class="navbar-nav ml-auto">
-                            <div class="topbar-divider d-none d-sm-block"></div>
+                        <div class="topbar-divider d-none d-sm-block"></div>
 
-                            <!-- Nav Item - User Information -->
-                            <li class="nav-item dropdown no-arrow">
-                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-                                    <i class="fas fa-user fa-fw text-gray-600"></i>
-                                    <span class="ml-2 d-none d-lg-inline text-gray-600 small">
-                                        <?= session()->get('nama'); ?><br>
-                                        <small class="text-muted"><?= session()->get('role'); ?></small>
-                                    </span>
-                                    <i class="fas fa-chevron-down fa-sm ml-1 text-gray-600"></i>
+                                <i class="fas fa-user fa-fw text-gray-600"></i>
+                                <span class="ml-2 d-none d-lg-inline text-gray-600 small">
+                                    <?= session()->get('nama'); ?><br>
+                                    <small class="text-muted"><?= session()->get('role'); ?></small>
+                                </span>
+                                <i class="fas fa-chevron-down fa-sm ml-1 text-gray-600"></i>
+                            </a>
+
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                <!-- Logout -->
+                                <a class="dropdown-item" href="<?= site_url('/logout') ?>">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
                                 </a>
+                            </div>
 
-                                <!-- Dropdown - User Information -->
-                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                    <!-- Logout -->
-                                    <a class="dropdown-item" href="<?= site_url('/logout') ?>">
-                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Logout
-                                    </a>
-                                </div>
-
-                            </li>
-
-                        </ul>
+                        </li>
+                    </ul>
 
                 </nav>
                 <!-- End of Topbar -->
@@ -471,7 +252,6 @@
                                     <div class="media-body">
                                         <h6 class="mt-0 mb-1"><?= esc($guru['nama']) ?></h6>
                                         <?php
-                                        // Format nomor WhatsApp (ubah 08 jadi 62)
                                         $nomor = preg_replace('/[^0-9]/', '', $guru['no_hp']);
                                         if (strpos($nomor, '08') === 0) {
                                             $nomor = '62' . substr($nomor, 1);
@@ -480,8 +260,6 @@
                                         date_default_timezone_set('Asia/Jakarta');
                                         $jam = (int) date('H');
 
-
-                                        // Tentukan waktu salam
                                         if ($jam >= 5 && $jam < 11) {
                                             $salam = 'pagi';
                                         } elseif ($jam >= 11 && $jam < 15) {
@@ -492,10 +270,7 @@
                                             $salam = 'malam';
                                         }
 
-                                        // Nama guru
                                         $namaGuru = esc($guru['nama']);
-
-                                        // Buat pesan WhatsApp
                                         $pesan = urlencode("Selamat $salam, $namaGuru");
                                         ?>
                                         <a href="https://wa.me/<?= $nomor ?>?text=<?= $pesan ?>"
@@ -514,7 +289,6 @@
 
             <?php endif; ?>
 
-
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
@@ -530,84 +304,214 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <script src="<?= base_url() ?>vendor/jquery/jquery.min.js"></script>
+    <!-- ==================== SEMUA SCRIPT DIKUMPULKAN DI BAWAH ==================== -->
+    
+    <!-- jQuery (WAJIB PALING PERTAMA) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- Bootstrap JS -->
     <script src="<?= base_url() ?>vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- jQuery Easing -->
     <script src="<?= base_url() ?>vendor/jquery-easing/jquery.easing.min.js"></script>
+    
+    <!-- SB Admin 2 -->
     <script src="<?= base_url() ?>js/sb-admin-2.min.js"></script>
-    <script src="<?= base_url() ?>vendor/chart.js/Chart.min.js"></script>
-    <script src="<?= base_url() ?>js/demo/chart-area-demo.js"></script>
-    <script src="<?= base_url() ?>js/demo/chart-pie-demo.js"></script>
 
-    <!-- DataTables -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css">
+    <!-- DataTables JS (setelah jQuery) -->
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- Combolight CSS & JS -->
-    <!-- Lightbox2 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/lightbox2@2.11.4/dist/css/lightbox.min.css" rel="stylesheet" />
+    <!-- Lightbox2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/lightbox2@2.11.4/dist/js/lightbox.min.js"></script>
 
-
-    <!-- Tambahkan CSS Select2 -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <!-- Tambahkan JS Select2 -->
+    <!-- Select2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
+    <!-- ==================== SCRIPT CUSTOM ==================== -->
     <script>
+        // DataTables initialization - hanya jika elemen #dataTable ada
         $(document).ready(function() {
-            $('#dataTable').DataTable({
-                responsive: true
-            });
+            if ($('#dataTable').length) {
+                $('#dataTable').DataTable({
+                    responsive: true
+                });
+            }
         });
+
+        // Menu list untuk pencarian
+        const userRole = "<?= session()->get('role'); ?>";
+
+        const allMenus = {
+            'kepala sekolah': [
+                { name: "Dashboard", url: "<?= site_url('/dashboard') ?>" },
+                { name: "Manajemen Guru", url: "<?= site_url('/guru') ?>" },
+                { name: "Manajemen Siswa", url: "<?= site_url('/siswa') ?>" },
+                { name: "Mata Pelajaran", url: "<?= site_url('/mapel') ?>" },
+                { name: "Jadwal Mengajar", url: "<?= site_url('/jadwal-mengajar') ?>" },
+                { name: "Absensi", url: "<?= site_url('/absensi') ?>" },
+                { name: "Penugasan", url: "<?= site_url('/penugasan') ?>" },
+                { name: "Tugas Saya", url: "<?= site_url('/tugas-saya') ?>" },
+                { name: "Riwayat Absensi", url: "<?= site_url('/riwayat-absensi') ?>" },
+                { name: "Profil", url: "<?= site_url('/profil') ?>" },
+                { name: "Panduan", url: "<?= site_url('/panduan') ?>" }
+            ],
+            'operator': [
+                { name: "Dashboard", url: "<?= site_url('/dashboard') ?>" },
+                { name: "Manajemen Guru", url: "<?= site_url('/guru') ?>" },
+                { name: "Manajemen Siswa", url: "<?= site_url('/siswa') ?>" },
+                { name: "Mata Pelajaran", url: "<?= site_url('/mapel') ?>" },
+                { name: "Jadwal Mengajar", url: "<?= site_url('/jadwal-mengajar') ?>" },
+                { name: "Absensi", url: "<?= site_url('/absensi') ?>" },
+                { name: "Penugasan", url: "<?= site_url('/penugasan') ?>" },
+                { name: "Tugas Saya", url: "<?= site_url('/tugas-saya') ?>" },
+                { name: "Pengumpulan Tugas", url: "<?= site_url('/tugas-saya') ?>" },
+                { name: "Riwayat Absensi", url: "<?= site_url('/riwayat-absensi') ?>" },
+                { name: "Profil", url: "<?= site_url('/profil') ?>" },
+                { name: "Panduan", url: "<?= site_url('/panduan') ?>" }
+            ],
+            'guru': [
+                { name: "Dashboard", url: "<?= site_url('/dashboard') ?>" },
+                { name: "Penugasan", url: "<?= site_url('/penugasan') ?>" },
+                { name: "Absensi", url: "<?= site_url('/absensi') ?>" },
+                { name: "Riwayat Absensi", url: "<?= site_url('/riwayat-absensi') ?>" },
+                { name: "Profil", url: "<?= site_url('/profil') ?>" },
+                { name: "Panduan", url: "<?= site_url('/panduan') ?>" }
+            ],
+            'guru bk': [
+                { name: "Dashboard", url: "<?= site_url('/dashboard') ?>" },
+                { name: "Penugasan", url: "<?= site_url('/penugasan') ?>" },
+                { name: "Absensi", url: "<?= site_url('/absensi') ?>" },
+                { name: "Riwayat Absensi", url: "<?= site_url('/riwayat-absensi') ?>" },
+                { name: "Profil", url: "<?= site_url('/profil') ?>" },
+                { name: "Panduan", url: "<?= site_url('/panduan') ?>" }
+            ],
+            'siswa': [
+                { name: "Dashboard", url: "<?= site_url('/dashboard') ?>" },
+                { name: "Tugas Saya", url: "<?= site_url('/tugas-saya') ?>" },
+                { name: "Riwayat Absensi", url: "<?= site_url('/riwayat-absensi') ?>" },
+                { name: "Profil", url: "<?= site_url('/profil') ?>" },
+                { name: "Panduan", url: "<?= site_url('/panduan') ?>" }
+            ]
+        };
+
+        const menuList = allMenus[userRole.toLowerCase()] || [];
+
+        // Pencarian menu
         document.addEventListener('DOMContentLoaded', function() {
             const searchInput = document.getElementById('sidebarSearchInput');
             const searchResults = document.getElementById('searchResults');
 
-            searchInput.addEventListener('keyup', function() {
-                const query = this.value.toLowerCase();
-                searchResults.innerHTML = '';
+            if (searchInput && searchResults) {
+                searchInput.addEventListener('input', function() {
+                    const query = this.value.toLowerCase();
+                    searchResults.innerHTML = '';
 
-                if (query.length === 0) {
-                    searchResults.style.display = 'none';
-                    return;
-                }
+                    if (query.length > 0) {
+                        const filtered = menuList.filter(menu =>
+                            menu.name.toLowerCase().includes(query)
+                        );
 
-                const filtered = menuList.filter(item => item.name.toLowerCase().includes(query));
-                if (filtered.length > 0) {
-                    filtered.forEach(item => {
-                        const link = document.createElement('a');
-                        link.classList.add('list-group-item', 'list-group-item-action');
-                        link.href = item.url;
-                        link.textContent = item.name;
-                        searchResults.appendChild(link);
-                    });
-                    searchResults.style.display = 'block';
-                } else {
-                    searchResults.style.display = 'none';
-                }
-            });
+                        if (filtered.length > 0) {
+                            filtered.forEach(menu => {
+                                const item = document.createElement('a');
+                                item.href = menu.url;
+                                item.className = 'list-group-item list-group-item-action';
+                                item.textContent = menu.name;
+                                searchResults.appendChild(item);
+                            });
+                            searchResults.style.display = 'block';
+                        } else {
+                            searchResults.innerHTML = '<div class="list-group-item text-muted">Menu tidak ditemukan</div>';
+                            searchResults.style.display = 'block';
+                        }
+                    } else {
+                        searchResults.style.display = 'none';
+                    }
+                });
 
-            // Hide suggestions when clicking outside
-            document.addEventListener('click', function(e) {
-                if (!searchResults.contains(e.target) && e.target !== searchInput) {
-                    searchResults.style.display = 'none';
-                }
-            });
+                document.addEventListener('click', function(event) {
+                    if (searchResults && !searchResults.contains(event.target) && event.target !== searchInput) {
+                        searchResults.style.display = 'none';
+                    }
+                });
+            }
         });
 
+        // Chat toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatToggle = document.getElementById('chatToggle');
+            const chatBox = document.getElementById('chatBox');
+            const chatClose = document.getElementById('chatClose');
 
-        document.getElementById('chatToggle').addEventListener('click', function() {
-            var chatBox = document.getElementById('chatBox');
-            chatBox.style.display = chatBox.style.display === 'none' ? 'block' : 'none';
+            if (chatToggle && chatBox) {
+                chatToggle.addEventListener('click', function() {
+                    chatBox.style.display = chatBox.style.display === 'none' ? 'block' : 'none';
+                });
+            }
+
+            if (chatClose && chatBox) {
+                chatClose.addEventListener('click', function() {
+                    chatBox.style.display = 'none';
+                });
+            }
         });
 
-        document.getElementById('chatClose').addEventListener('click', function() {
-            document.getElementById('chatBox').style.display = 'none';
+        // ==================== CHART INITIALIZATION DENGAN PENGECEKAN ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cek apakah chart-area canvas ada
+            const areaCanvas = document.getElementById('myAreaChart');
+            if (areaCanvas && typeof Chart !== 'undefined') {
+                const ctx = areaCanvas.getContext('2d');
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
+                        datasets: [{
+                            label: 'Aktivitas',
+                            data: [0, 10, 5, 15, 20, 30, 25, 40, 35, 50, 45, 60],
+                            backgroundColor: 'rgba(78, 115, 223, 0.2)',
+                            borderColor: 'rgba(78, 115, 223, 1)',
+                            borderWidth: 2,
+                            pointBackgroundColor: 'rgba(78, 115, 223, 1)',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            }
+
+            // Cek apakah chart-pie canvas ada
+            const pieCanvas = document.getElementById('myPieChart');
+            if (pieCanvas && typeof Chart !== 'undefined') {
+                const ctx = pieCanvas.getContext('2d');
+                new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Hadir', 'Sakit', 'Izin', 'Alpha'],
+                        datasets: [{
+                            data: [70, 10, 10, 10],
+                            backgroundColor: ['#4e73df', '#1cc88a', '#f6c23e', '#e74a3b'],
+                            hoverBackgroundColor: ['#2e59d9', '#17a673', '#dda20a', '#c93a2b'],
+                            hoverBorderColor: 'rgba(234, 236, 244, 1)'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            }
         });
     </script>
-
 
 </body>
 
