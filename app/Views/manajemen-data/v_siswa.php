@@ -202,11 +202,15 @@
                                             <a href="<?= base_url('siswa/edit-siswa/' . $row['id_user']) ?>" class="btn btn-sm btn-warning mr-1" title="Edit">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-                                            <button type="button" class="btn btn-sm btn-danger btn-hapus"
-                                                data-id="<?= $row['id_user'] ?>"
-                                                data-nama="<?= esc($row['nama']) ?>">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
+                                            <!-- FORM HAPUS dengan method POST -->
+                                            <form action="<?= base_url('siswa/hapus/' . $row['id_user']) ?>" method="post" class="d-inline form-hapus">
+                                                <?= csrf_field() ?>
+                                                <button type="button" class="btn btn-sm btn-danger btn-hapus"
+                                                    data-id="<?= $row['id_user'] ?>"
+                                                    data-nama="<?= esc($row['nama']) ?>">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </form>
                                         </div>
                                     </td>
                                 <?php endif; ?>
@@ -218,33 +222,38 @@
         </div>
     </div>
 </div>
-
 <script>
-    $('#inputFoto').on('change', function () {
-        $(this).next('.custom-file-label').html($(this).val().split('\\').pop());
-    });
-    function togglePassword() {
-        const p = document.getElementById('password');
-        const i = document.getElementById('eye-icon');
-        p.type = p.type === 'password' ? 'text' : 'password';
-        i.classList.toggle('bi-eye');
-        i.classList.toggle('bi-eye-slash');
-    }
-    document.addEventListener('DOMContentLoaded', function () {
-        document.querySelectorAll('.btn-hapus').forEach(btn => {
-            btn.addEventListener('click', function () {
-                const id = this.dataset.id;
-                const nama = this.dataset.nama;
-                Swal.fire({
-                    title: 'Yakin ingin menghapus?',
-                    text: `Data siswa "${nama}" akan dihapus permanen.`,
-                    icon: 'warning', showCancelButton: true,
-                    confirmButtonColor: '#d33', cancelButtonColor: '#6c757d',
-                    confirmButtonText: 'Ya, hapus!', cancelButtonText: 'Batal'
-                }).then(r => { if (r.isConfirmed) window.location.href = '<?= base_url('siswa/hapus') ?>/' + id; });
-            });
+$(document).ready(function() {
+    // Debug: cek tombol terdeteksi
+    console.log('Tombol hapus ditemukan:', $('.btn-hapus').length);
+    
+    // Event delegation untuk tombol hapus
+    $(document).on('click', '.btn-hapus', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const id = $(this).data('id');
+        const nama = $(this).data('nama');
+        const form = $(this).closest('form');
+        
+        console.log('Tombol diklik - ID:', id, 'Nama:', nama); // Debug
+        
+        Swal.fire({
+            title: 'Yakin ingin menghapus?',
+            text: `Data siswa "${nama}" akan dihapus permanen.`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal'
+        }).then(result => {
+            if (result.isConfirmed) {
+                console.log('Menghapus ID:', id);
+                form.submit();
+            }
         });
     });
+});
 </script>
-
 <?= $this->endSection() ?>

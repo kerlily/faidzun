@@ -75,7 +75,7 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->post('/siswa/tambah-siswa', 'ManajemenController::tambahSiswa', ['filter' => 'role:operator']);
     $routes->get('/siswa/edit-siswa/(:num)', 'ManajemenController::editSiswa/$1', ['filter' => 'role:operator']);
     $routes->post('/siswa/update/(:num)', 'ManajemenController::updateSiswa/$1', ['filter' => 'role:operator']);
-    $routes->get('/siswa/hapus/(:num)', 'ManajemenController::hapusSiswa/$1', ['filter' => 'role:operator']);
+    $routes->post('/siswa/hapus/(:num)', 'ManajemenController::hapusSiswa/$1', ['filter' => 'role:operator']);
     $routes->get('/siswa/export-excel', 'ManajemenController::exportSiswaExcel', ['filter' => 'role:kepala sekolah,operator']);
     $routes->post('/siswa/import', 'ManajemenController::importSiswa', ['filter' => 'role:operator']);
 
