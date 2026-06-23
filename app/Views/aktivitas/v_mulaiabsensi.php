@@ -20,6 +20,7 @@
             ?>
 
             <form action="<?= base_url('absensi/simpan') ?>" method="post">
+                <?= csrf_field() ?>
                 <input type="hidden" name="id_jadwal" value="<?= $jadwal['id_jadwal'] ?>">
                 <!-- Informasi Umum dan Materi -->
                 <div class="card mb-4 shadow-sm">

@@ -223,35 +223,27 @@
     </div>
 </div>
 <script>
-$(document).ready(function() {
-    // Debug: cek tombol terdeteksi
-    console.log('Tombol hapus ditemukan:', $('.btn-hapus').length);
-    
-    // Event delegation untuk tombol hapus
-    $(document).on('click', '.btn-hapus', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        const id = $(this).data('id');
-        const nama = $(this).data('nama');
-        const form = $(this).closest('form');
-        
-        console.log('Tombol diklik - ID:', id, 'Nama:', nama); // Debug
-        
-        Swal.fire({
-            title: 'Yakin ingin menghapus?',
-            text: `Data siswa "${nama}" akan dihapus permanen.`,
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#6c757d',
-            confirmButtonText: 'Ya, hapus!',
-            cancelButtonText: 'Batal'
-        }).then(result => {
-            if (result.isConfirmed) {
-                console.log('Menghapus ID:', id);
-                form.submit();
-            }
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.btn-hapus').forEach(function (button) {
+        button.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            var nama = this.getAttribute('data-nama');
+            var form = this.closest('form');
+
+            Swal.fire({
+                title: 'Yakin ingin menghapus?',
+                text: 'Data siswa "' + nama + '" akan dihapus permanen.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then(function (result) {
+                if (result.isConfirmed) form.submit();
+            });
         });
     });
 });

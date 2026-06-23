@@ -41,7 +41,7 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('/absensi', 'AbsensiController::index', ['filter' => 'role:kepala sekolah,operator,guru,guru bk']);
     $routes->get('/absensi/mulai-absensi/(:num)', 'AbsensiController::mulai/$1', ['filter' => 'role:guru,guru bk']);
     $routes->post('/absensi/simpan', 'AbsensiController::simpan', ['filter' => 'role:guru,guru bk']);
-    $routes->get('/absensi/export', 'AbsensiController::exportExcel', ['filter' => 'role:kepala sekolah,operator']);
+    $routes->get('/absensi/export', 'AbsensiController::exportExcel', ['filter' => 'role:kepala sekolah,guru,operator']);
 
     // Riwayat absensi
     $routes->get('/riwayat-absensi', 'AbsensiController::riwayat', ['filter' => 'role:kepala sekolah,operator,guru,guru bk,siswa']);
