@@ -45,7 +45,7 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
 
     // Riwayat absensi
     $routes->get('/riwayat-absensi', 'AbsensiController::riwayat', ['filter' => 'role:kepala sekolah,operator,guru,guru bk,siswa']);
-    $routes->post('/riwayat-absensi/edit-absensi', 'AbsensiController::editAbsensi', ['filter' => 'role:kepala sekolah,operator']);
+    $routes->post('/riwayat-absensi/edit-absensi', 'AbsensiController::editAbsensi', ['filter' => 'role:kepala sekolah,operator,guru,guru bk']);
     $routes->post('/data-siswa/hapus_kelas', 'AbsensiController::hapusPerKelas', ['filter' => 'role:kepala sekolah,operator']);
 
     // Penugasan
@@ -69,7 +69,7 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->post('/guru/update/(:num)', 'ManajemenController::updateGuru/$1', ['filter' => 'role:operator']);
     $routes->post('/guru/hapus/(:num)', 'ManajemenController::hapusGuru/$1', ['filter' => 'role:operator']);
     $routes->get('/guru/export-excel', 'ManajemenController::exportGuruExcel', ['filter' => 'role:kepala sekolah,operator']);
-
+    
     // Siswa
     $routes->get('/siswa', 'ManajemenController::siswa', ['filter' => 'role:kepala sekolah,operator']);
     $routes->post('/siswa/tambah-siswa', 'ManajemenController::tambahSiswa', ['filter' => 'role:operator']);
@@ -99,4 +99,5 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->post('/dashboard/tambah-galeri', 'ManajemenController::tambahGaleri', ['filter' => 'role:operator']);
     $routes->get('/dashboard/hapus-galeri/(:num)', 'ManajemenController::hapusGaleri/$1', ['filter' => 'role:operator']);
     $routes->get('/dashboard/export-absen', 'ManajemenController::exportAbsenExcel', ['filter' => 'role:kepala sekolah,operator']);
+
 });

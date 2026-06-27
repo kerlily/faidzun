@@ -19,7 +19,7 @@
             $jamSelesai = date('H:i', strtotime($jadwal['jam_selesai']));
             ?>
 
-            <form action="<?= base_url('absensi/simpan') ?>" method="post">
+            <form action="<?= site_url('absensi/simpan') ?>" method="post">
                 <?= csrf_field() ?>
                 <input type="hidden" name="id_jadwal" value="<?= $jadwal['id_jadwal'] ?>">
                 <!-- Informasi Umum dan Materi -->
@@ -91,7 +91,7 @@
 
                 <!-- Tombol -->
                 <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Submit</button>
-                <a href="<?= base_url('absensi') ?>" class="btn btn-secondary">Kembali</a>
+                <a href="<?= site_url('absensi') ?>" class="btn btn-secondary">Kembali</a>
             </form>
         </div>
     </div>

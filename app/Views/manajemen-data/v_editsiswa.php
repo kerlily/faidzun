@@ -6,7 +6,7 @@
 
 <?= $this->section('content') ?>
 <div class="container mt-4">
-    <form action="<?= base_url('siswa/update/' . $siswa['id_user']) ?>" method="post" enctype="multipart/form-data">
+    <form action="<?= site_url('siswa/update/' . $siswa['id_user']) ?>" method="post" enctype="multipart/form-data">
         <?= csrf_field() ?>
         <div class="form-row">
             <div class="form-group col-md-6">
@@ -114,7 +114,7 @@
 
         <div class="mt-3">
             <button type="submit" class="btn btn-success">Simpan Perubahan</button>
-            <a href="<?= base_url('/siswa') ?>" class="btn btn-secondary ml-2">Batal</a>
+            <a href="<?= site_url('/siswa') ?>" class="btn btn-secondary ml-2">Batal</a>
         </div>
     </form>
 

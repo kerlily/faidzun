@@ -26,7 +26,7 @@
                 <h5 class="mb-0">Form Tambah Mata Pelajaran</h5>
             </div>
             <div class="card-body">
-                <form action="<?= base_url('mapel/tambah-mapel') ?>" method="post">
+                <form action="<?= site_url('mapel/tambah-mapel') ?>" method="post">
                     <?= csrf_field() ?>
                     <div class="form-group mb-3">
                         <label>Kode Mata Pelajaran</label>
@@ -102,7 +102,7 @@
                 <button type="button" class="close text-white" data-dismiss="modal"><span>&times;</span></button>
             </div>
             <div class="modal-body">
-                <form id="editMapelForm" action="<?= base_url('mapel/edit-mapel') ?>" method="post">
+                <form id="editMapelForm" action="<?= site_url('mapel/edit-mapel') ?>" method="post">
                     <?= csrf_field() ?>
                     <input type="hidden" name="kode_mapel_lama" id="kode_mapel_lama">
                     <div class="form-group mb-3">
@@ -136,7 +136,7 @@
             icon: 'warning', showCancelButton: true,
             confirmButtonColor: '#d33', cancelButtonColor: '#6c757d',
             confirmButtonText: 'Ya, hapus!', cancelButtonText: 'Batal'
-        }).then(r => { if (r.isConfirmed) window.location.href = '/mapel/hapus/' + kodeMapel; });
+        }).then(r => { if (r.isConfirmed) window.location.href = '<?= site_url('mapel/hapus') ?>/' + kodeMapel; });
     }
 </script>
 <?php endif; ?>

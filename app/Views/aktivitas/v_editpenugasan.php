@@ -19,7 +19,7 @@
         $isGuru = in_array($role, ['guru', 'guru bk']);
         $isAdmin = in_array($role, ['kepala sekolah', 'operator']);
         ?>
-        <form action="<?= base_url('penugasan/update/' . $penugasan['id_tugas']) ?>" method="post">
+        <form action="<?= site_url('penugasan/update/' . $penugasan['id_tugas']) ?>" method="post">
             <?= csrf_field() ?>
             <input type="hidden" name="id_tugas" value="<?= esc($penugasan['id_tugas']) ?>">
 

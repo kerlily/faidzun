@@ -28,6 +28,7 @@
             });
         </script>
     <?php endif; ?>
+    
     <h4 class="mb-4">Daftar Absensi Mata Pelajaran</h4>
 
     <div class="alert alert-info" role="alert">
@@ -60,8 +61,8 @@
             </div>
             <div class="col-md-4 d-flex align-items-end">
                 <button type="submit" class="btn btn-primary mt-2">Terapkan Filter</button>
-                <a href="<?= base_url('absensi') ?>" class="btn btn-secondary ml-2">Reset</a>
-                <a href="<?= base_url('/absensi/export') ?>" class="btn btn-success ml-2"><i class="bi bi-file-earmark-excel"></i>Export</a>
+                <a href="<?= site_url('absensi') ?>" class="btn btn-secondary ml-2">Reset</a>
+                <a href="<?= site_url('/absensi/export') ?>" class="btn btn-success ml-2"><i class="bi bi-file-earmark-excel"></i>Export</a>
             </div>
         </div>
     </form>
@@ -81,6 +82,10 @@
     ];
 
     $hariIni = $daftarHari[$hariInggris];
+    
+    // Ambil role user
+    $role = session()->get('role');
+    $isOperator = ($role === 'operator');
     ?>
 
     <div class="row">
@@ -142,10 +147,11 @@
                                 <?php endif; ?>
                             </div>
 
+                            <!-- ====== BAGIAN TOMBOL ====== -->
                             <div>
-                                <?php if ($status === 'terbuka'): ?>
+                                <?php if ($status === 'terbuka' && !$isOperator): ?>
                                     <?php if ($item['boleh_absen']): ?>
-                                        <a href="<?= base_url('absensi/mulai-absensi/' . $item['id_jadwal']) ?>" class="btn btn-sm btn-success">
+                                        <a href="<?= site_url('absensi/mulai-absensi/' . $item['id_jadwal']) ?>" class="btn btn-sm btn-success">
                                             Mulai Absensi
                                         </a>
                                     <?php else: ?>
@@ -156,9 +162,13 @@
                                 <?php else: ?>
                                     <button class="btn btn-sm btn-secondary" disabled>
                                         <i class="fas fa-lock"></i>
+                                        <?php if ($isOperator && $status === 'terbuka'): ?>
+                                            Tidak Tersedia
+                                        <?php endif; ?>
                                     </button>
                                 <?php endif; ?>
                             </div>
+                            <!-- ====== END BAGIAN TOMBOL ====== -->
 
                         </div>
                     </div>

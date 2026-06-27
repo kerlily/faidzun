@@ -20,7 +20,7 @@
                 <h5 class="mb-0">Form Tambah Kelas</h5>
             </div>
             <div class="card-body">
-                <form action="<?= base_url('kelas/tambah-kelas') ?>" method="post">
+                <form action="<?= site_url('kelas/tambah-kelas') ?>" method="post">
                     <?= csrf_field() ?>
                     <div class="form-group mb-3">
                         <label>Nama Kelas</label>
@@ -102,7 +102,7 @@
                 <button type="button" class="close text-white" data-dismiss="modal"><span>&times;</span></button>
             </div>
             <div class="modal-body">
-                <form id="editForm" action="<?= base_url('kelas/edit-kelas') ?>" method="post">
+                <form id="editForm" action="<?= site_url('kelas/edit-kelas') ?>" method="post">
                     <?= csrf_field() ?>
                     <input type="hidden" id="edit_id_kelas" name="id_kelas">
                     <div class="form-group">
@@ -128,7 +128,7 @@
     </div>
 </div>
 
-<form id="formHapus" action="<?= base_url('kelas/hapus-kelas') ?>" method="post" style="display:none;">
+<form id="formHapus" action="<?= site_url('kelas/hapus-kelas') ?>" method="post" style="display:none;">
     <?= csrf_field() ?>
     <input type="hidden" name="id_kelas" id="inputIdKelas">
 </form>

@@ -216,63 +216,69 @@ class AbsensiController extends BaseController
         return redirect()->to('/absensi')->with('swal_success', 'Absensi berhasil disimpan.');
     }
 
-    public function riwayat()
-    {
-        $absensiModel = new AbsensiModel();
-        $userModel    = new UsersModel();
-        $kelasModel   = new KelasModel();
-        $mapelModel   = new MapelModel();
-        $jadwalModel  = new JadwalMengajarModel();
+   public function riwayat()
+{
+    $absensiModel = new AbsensiModel();
+    $userModel    = new UsersModel();
+    $kelasModel   = new KelasModel();
+    $mapelModel   = new MapelModel();
+    $jadwalModel  = new JadwalMengajarModel();
 
-        $session     = session();
-        $role        = $session->get('role');
-        $idUser      = $session->get('id_user');
+    $session     = session();
+    $role        = $session->get('role');
+    $idUser      = $session->get('id_user');
 
-        $filterKelas = $this->request->getGet('kelas');
-        $filterMapel = $this->request->getGet('mapel');
+    $filterKelas = $this->request->getGet('kelas');
+    $filterMapel = $this->request->getGet('mapel');
 
-        $builder = $absensiModel
-            ->select('absensi.*, users.nama, users.jenis_kelamin, kelas.nama_kelas, mapel.nama_mapel')
-            ->join('users', 'users.id_user = absensi.id_user')
-            ->join('kelas', 'kelas.id_kelas = absensi.kelas_saat_absen')
-            ->join('jadwal_mengajar', 'jadwal_mengajar.id_jadwal = absensi.id_jadwal')
-            ->join('mapel', 'mapel.kode_mapel = jadwal_mengajar.kode_mapel');
+    $builder = $absensiModel
+        ->select('absensi.*, users.nama, users.jenis_kelamin, kelas.id_kelas, kelas.nama_kelas, mapel.nama_mapel, jadwal_mengajar.id_user as id_guru, guru_user.nama as guru')
+        ->join('users', 'users.id_user = absensi.id_user')
+        ->join('kelas', 'kelas.id_kelas = absensi.kelas_saat_absen')
+        ->join('jadwal_mengajar', 'jadwal_mengajar.id_jadwal = absensi.id_jadwal')
+        ->join('mapel', 'mapel.kode_mapel = jadwal_mengajar.kode_mapel')
+        ->join('users as guru_user', 'guru_user.id_user = jadwal_mengajar.id_user');
 
-        if ($role === 'siswa') {
-            $user = $userModel->find($idUser);
-            $builder->where('absensi.kelas_saat_absen', $user['id_kelas']);
-            $builder->where('absensi.id_user', $user['id_user']);
+    // CEK ROLE UNTUK FILTER
+    if ($role === 'siswa') {
+        $user = $userModel->find($idUser);
+        $builder->where('absensi.kelas_saat_absen', $user['id_kelas']);
+        $builder->where('absensi.id_user', $user['id_user']);
 
-            $mapelList = $jadwalModel
-                ->select('mapel.kode_mapel, mapel.nama_mapel')
-                ->join('mapel', 'mapel.kode_mapel = jadwal_mengajar.kode_mapel')
-                ->where('jadwal_mengajar.id_kelas', $user['id_kelas'])
-                ->groupBy('mapel.kode_mapel')
-                ->findAll();
-        } elseif ($role === 'guru' || $role === 'guru bk') {
-            // Guru hanya lihat absensi di kelas yang dia ajar
-            $builder->where('jadwal_mengajar.id_user', $idUser);
-            $mapelList = $mapelModel->findAll();
-        } else {
-            $mapelList = $mapelModel->findAll();
-        }
-
-        if ($role !== 'siswa' && !empty($filterKelas) && $filterKelas !== 'Semua') {
-            $builder->where('kelas.id_kelas', $filterKelas);
-        }
-        if (!empty($filterMapel) && $filterMapel !== 'Semua') {
-            $builder->where('mapel.kode_mapel', $filterMapel);
-        }
-
-        return view('aktivitas/v_riwayatabsensi', [
-            'riwayat'     => $builder->orderBy('tanggal', 'DESC')->findAll(),
-            'role'        => $role,
-            'kelasList'   => $kelasModel->findAll(),
-            'mapelList'   => $mapelList,
-            'filterKelas' => $filterKelas ?? 'Semua',
-            'filterMapel' => $filterMapel ?? 'Semua',
-        ]);
+        $mapelList = $jadwalModel
+            ->select('mapel.kode_mapel, mapel.nama_mapel')
+            ->join('mapel', 'mapel.kode_mapel = jadwal_mengajar.kode_mapel')
+            ->where('jadwal_mengajar.id_kelas', $user['id_kelas'])
+            ->groupBy('mapel.kode_mapel')
+            ->findAll();
+    } elseif ($role === 'guru' || $role === 'guru bk') {
+        $builder->where('jadwal_mengajar.id_user', $idUser);
+        $mapelList = $jadwalModel
+            ->select('mapel.kode_mapel, mapel.nama_mapel')
+            ->join('mapel', 'mapel.kode_mapel = jadwal_mengajar.kode_mapel')
+            ->where('jadwal_mengajar.id_user', $idUser)
+            ->groupBy('mapel.kode_mapel')
+            ->findAll();
+    } else {
+        $mapelList = $mapelModel->findAll();
     }
+
+    if ($role !== 'siswa' && !empty($filterKelas) && $filterKelas !== 'Semua') {
+        $builder->where('kelas.id_kelas', $filterKelas);
+    }
+    if (!empty($filterMapel) && $filterMapel !== 'Semua') {
+        $builder->where('mapel.kode_mapel', $filterMapel);
+    }
+
+    return view('aktivitas/v_riwayatabsensi', [
+        'riwayat'     => $builder->orderBy('tanggal', 'DESC')->findAll(),
+        'role'        => $role,
+        'kelasList'   => $kelasModel->findAll(),
+        'mapelList'   => $mapelList,
+        'filterKelas' => $filterKelas ?? 'Semua',
+        'filterMapel' => $filterMapel ?? 'Semua',
+    ]);
+}
 
     public function editAbsensi()
     {

@@ -8,7 +8,7 @@
 <?php $role = session()->get('role'); ?>
 <div class="container mt-4">
     <div class="card shadow-sm border-0 p-4">
-        <form action="<?= base_url('/profil/update') ?>" method="post" enctype="multipart/form-data">
+        <form action="<?= site_url('/profil/update') ?>" method="post" enctype="multipart/form-data">
             <?= csrf_field() ?>
             <input type="hidden" name="id_user" value="<?= session()->get('id_user') ?>">
             <!-- Nama -->

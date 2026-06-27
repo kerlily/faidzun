@@ -31,8 +31,10 @@
             <h5 class="mb-0">Form Tambah Guru</h5>
         </div>
         <div class="card-body">
-            <form action="<?= base_url('guru/tambah-guru') ?>" method="post" enctype="multipart/form-data">
+            <form action="<?= site_url('guru/tambah-guru') ?>" method="post" enctype="multipart/form-data">
                 <?= csrf_field() ?>
+                
+                <!-- Row 1: Nama & Username -->
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label>Nama Lengkap</label>
@@ -43,17 +45,20 @@
                         <input type="text" class="form-control" name="username" placeholder="Username" required>
                     </div>
                 </div>
+
+                <!-- Row 2: NIP & TTL -->
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label>NIP</label>
                         <input type="text" class="form-control" name="nip" placeholder="Nomor Induk Pegawai" required>
                     </div>
-                    <div class="form-row">
                     <div class="form-group col-md-6">
                         <label>Tempat, Tanggal Lahir</label>
                         <input type="text" class="form-control" name="ttl" placeholder="Contoh: Pekalongan, 10 Mei 1985" required>
                     </div>
                 </div>
+
+                <!-- Row 3: Jenis Kelamin & Agama -->
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label>Jenis Kelamin</label>
@@ -72,6 +77,8 @@
                         </select>
                     </div>
                 </div>
+
+                <!-- Row 4: Role & Pendidikan -->
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label>Role</label>
@@ -92,6 +99,8 @@
                         </select>
                     </div>
                 </div>
+
+                <!-- Row 5: Foto (full width) -->
                 <div class="form-group">
                     <label>Foto</label>
                     <div class="custom-file">
@@ -99,10 +108,14 @@
                         <label class="custom-file-label" for="inputFoto">Choose file</label>
                     </div>
                 </div>
+
+                <!-- Row 6: Alamat (full width) -->
                 <div class="form-group">
                     <label>Alamat Lengkap</label>
                     <textarea class="form-control" name="alamat" rows="2" placeholder="Alamat Lengkap" required></textarea>
                 </div>
+
+                <!-- Row 7: No HP & Password -->
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label>Nomor HP</label>
@@ -120,6 +133,7 @@
                         </div>
                     </div>
                 </div>
+
                 <button type="submit" class="btn btn-primary mt-2">Tambah</button>
             </form>
         </div>
@@ -132,7 +146,7 @@
             <h5 class="mb-0">
                 <?= $role === 'kepala sekolah' ? 'Data Guru (View Only)' : 'Manajemen Guru' ?>
             </h5>
-            <a href="<?= base_url('guru/export-excel') ?>" class="btn btn-primary btn-sm">
+            <a href="<?= site_url('guru/export-excel') ?>" class="btn btn-primary btn-sm">
                 <i class="fas fa-file-excel"></i> Download Excel
             </a>
         </div>
@@ -185,7 +199,7 @@
                                 <?php if ($role === 'operator'): ?>
                                     <td>
                                         <div class="d-flex">
-                                            <a href="<?= base_url('guru/edit-guru/' . $g['id_user']) ?>" class="btn btn-sm btn-warning mr-1" title="Edit">
+                                            <a href="<?= site_url('guru/edit-guru/' . $g['id_user']) ?>" class="btn btn-sm btn-warning mr-1" title="Edit">
                                                 <i class="fa fa-edit"></i>
                                             </a>
                                             <button type="button" class="btn btn-sm btn-danger btn-hapus"
@@ -193,7 +207,7 @@
                                                 data-nama="<?= esc($g['nama']) ?>" title="Hapus">
                                                 <i class="fa fa-trash"></i>
                                             </button>
-                                            <form id="form-hapus-<?= $g['id_user'] ?>" action="<?= base_url('guru/hapus/' . $g['id_user']) ?>" method="post" style="display:none;">
+                                            <form id="form-hapus-<?= $g['id_user'] ?>" action="<?= site_url('guru/hapus/' . $g['id_user']) ?>" method="post" style="display:none;">
                                                 <?= csrf_field() ?>
                                             </form>
                                         </div>

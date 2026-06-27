@@ -109,8 +109,9 @@
                             <a class="collapse-item <?= $uri->getSegment(1) === 'jadwal-mengajar' ? 'active' : '' ?>" href="<?= site_url('/jadwal-mengajar') ?>">Jadwal Mengajar</a>
                             <a class="collapse-item <?= $uri->getSegment(1) === 'penugasan' ? 'active' : '' ?>" href="<?= site_url('/penugasan') ?>">Penugasan</a>
                             <a class="collapse-item <?= $uri->getSegment(1) === 'absensi' ? 'active' : '' ?>" href="<?= site_url('/absensi') ?>">Absensi</a>
+                            <a class="collapse-item <?= $uri->getSegment(1) === 'riwayat-absensi' ? 'active' : '' ?>" href="<?= site_url('/riwayat-absensi') ?>">Riwayat Absensi</a>
                         <?php endif; ?>
-                        <?php if (in_array($role, ['kepala sekolah', 'operator', 'siswa'])): ?>
+                        <?php if (in_array($role, ['siswa'])): ?>
                             <a class="collapse-item <?= $uri->getSegment(1) === 'tugas-saya' ? 'active' : '' ?>" href="<?= site_url('/tugas-saya') ?>">Tugas Saya</a>
                             <a class="collapse-item <?= $uri->getSegment(1) === 'riwayat-absensi' ? 'active' : '' ?>" href="<?= site_url('/riwayat-absensi') ?>">Riwayat Absensi</a>
                         <?php endif; ?>
@@ -378,12 +379,14 @@
                 { name: "Penugasan", url: "<?= site_url('/penugasan') ?>" },
                 { name: "Absensi", url: "<?= site_url('/absensi') ?>" },
                 { name: "Riwayat Absensi", url: "<?= site_url('/riwayat-absensi') ?>" },
+                { name: "Riwayat Absensi", url: "<?= site_url('/riwayat-absensi') ?>" },
                 { name: "Profil", url: "<?= site_url('/profil') ?>" },
                 { name: "Panduan", url: "<?= site_url('/panduan') ?>" }
             ],
             'guru bk': [
                 { name: "Dashboard", url: "<?= site_url('/dashboard') ?>" },
                 { name: "Penugasan", url: "<?= site_url('/penugasan') ?>" },
+                { name: "Riwayat Absensi", url: "<?= site_url('/riwayat-absensi') ?>" },
                 { name: "Absensi", url: "<?= site_url('/absensi') ?>" },
                 { name: "Riwayat Absensi", url: "<?= site_url('/riwayat-absensi') ?>" },
                 { name: "Profil", url: "<?= site_url('/profil') ?>" },

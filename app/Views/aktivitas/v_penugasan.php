@@ -46,7 +46,7 @@
             $isGuru = in_array($role, ['guru', 'guru bk']);
             $isAdmin = in_array($role, ['kepala sekolah', 'operator']);
             ?>
-            <form action="<?= base_url('penugasan/tambah-penugasan') ?>" method="post">
+            <form action="<?= site_url('penugasan/tambah-penugasan') ?>" method="post">
                 <?= csrf_field() ?>
                 <div class="form-row">
                     <!-- Field jadwal: role-based -->

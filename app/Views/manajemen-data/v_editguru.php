@@ -6,7 +6,7 @@
 
 <?= $this->section('content') ?>
 <div class="container mt-4">
-    <form action="<?= base_url('guru/update/' . $guru['id_user']) ?>" method="post" enctype="multipart/form-data">
+    <form action="<?= site_url('guru/update/' . $guru['id_user']) ?>" method="post" enctype="multipart/form-data">
         <?= csrf_field() ?>
         <input type="hidden" name="id_user" value="<?= esc($guru['id_user']) ?>">
 
@@ -107,7 +107,7 @@
 
         <div class="mt-3">
             <button type="submit" class="btn btn-success">Simpan Perubahan</button>
-            <a href="<?= base_url('/guru') ?>" class="btn btn-secondary ml-2">Batal</a>
+            <a href="<?= site_url('/guru') ?>" class="btn btn-secondary ml-2">Batal</a>
         </div>
     </form>
 

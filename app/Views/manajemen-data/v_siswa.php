@@ -23,7 +23,7 @@
             <h5 class="mb-0"><i class="bi bi-upload"></i> Import Data Siswa</h5>
         </div>
         <div class="card-body">
-            <form action="<?= base_url('siswa/import') ?>" method="post" enctype="multipart/form-data">
+            <form action="<?= site_url('siswa/import') ?>" method="post" enctype="multipart/form-data">
                 <?= csrf_field() ?>
                 <div class="input-group mb-2">
                     <div class="custom-file">
@@ -53,7 +53,7 @@
             <h5 class="mb-0"><i class="bi bi-person-plus"></i> Form Tambah Siswa</h5>
         </div>
         <div class="card-body">
-            <form action="<?= base_url('siswa/tambah-siswa') ?>" method="post" enctype="multipart/form-data">
+            <form action="<?= site_url('siswa/tambah-siswa') ?>" method="post" enctype="multipart/form-data">
                 <?= csrf_field() ?>
                 <div class="form-row">
                     <div class="form-group col-md-6">
@@ -148,7 +148,7 @@
             <h5 class="mb-0">
                 <?= $role === 'kepala sekolah' ? 'Data Siswa' : 'Manajemen Siswa' ?>
             </h5>
-            <a href="<?= base_url('siswa/export-excel') ?>" class="btn btn-primary btn-sm">
+            <a href="<?= site_url('siswa/export-excel') ?>" class="btn btn-primary btn-sm">
                 <i class="fas fa-file-excel"></i> Download Excel
             </a>
         </div>
@@ -199,11 +199,11 @@
                                 <?php if ($role === 'operator'): ?>
                                     <td>
                                         <div class="d-flex">
-                                            <a href="<?= base_url('siswa/edit-siswa/' . $row['id_user']) ?>" class="btn btn-sm btn-warning mr-1" title="Edit">
+                                            <a href="<?= site_url('siswa/edit-siswa/' . $row['id_user']) ?>" class="btn btn-sm btn-warning mr-1" title="Edit">
                                                 <i class="fa fa-edit"></i>
                                             </a>
                                             <!-- FORM HAPUS dengan method POST -->
-                                            <form action="<?= base_url('siswa/hapus/' . $row['id_user']) ?>" method="post" class="d-inline form-hapus">
+                                            <form action="<?= site_url('siswa/hapus/' . $row['id_user']) ?>" method="post" class="d-inline form-hapus">
                                                 <?= csrf_field() ?>
                                                 <button type="button" class="btn btn-sm btn-danger btn-hapus"
                                                     data-id="<?= $row['id_user'] ?>"

@@ -114,7 +114,7 @@
                                         <button type="button"
                                             class="btn btn-danger btn-sm position-absolute"
                                             style="top: 10px; right: 10px; z-index: 10;"
-                                            onclick="konfirmasiHapus('<?= base_url('/dashboard/hapus-galeri/' . $foto['id_galeri']) ?>')">
+                                            onclick="konfirmasiHapus('<?= site_url('/dashboard/hapus-galeri/' . $foto['id_galeri']) ?>')">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     <?php endif; ?>
@@ -148,7 +148,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form id="formUploadFoto" action="<?= base_url('dashboard/tambah-galeri') ?>" method="post" enctype="multipart/form-data">
+                <form id="formUploadFoto" action="<?= site_url('dashboard/tambah-galeri') ?>" method="post" enctype="multipart/form-data">
                     <?= csrf_field() ?>
                     <div class="modal-body">
                         <div class="form-group">
